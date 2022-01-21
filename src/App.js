@@ -19,26 +19,17 @@ class App extends Component {
   };
 
   render() {  
-  return (
-    <div className="App">
-      <header className="App-header">
-        <Form onChange={fields => this.onChange(fields)} />
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-          {JSON.stringify(this.state.fields, null, 2)}
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+      <div className="App">
+        <header className="App-header">
+          <Form onChange={fields => this.onChange(fields)} />
+          <img src={logo} className="App-logo" alt="logo" />
+          <p>
+            {JSON.stringify(this.state.fields, null, 2)}
+          </p>
+        </header>
+      </div>
+    );
+  }
 }
-
 export default App;
