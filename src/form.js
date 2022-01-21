@@ -1,4 +1,5 @@
 import React from "react";
+import CraneCalculator from './CraneCalculator';
 
 export default class form extends React.Component {
   state = {
@@ -15,6 +16,7 @@ export default class form extends React.Component {
 
   onSubmit = e => {
     e.preventDefault();
+    CraneCalculator.input(this.state);
     // this.props.onSubmit(this.state);
     this.setState({
       inputConfig: "",
