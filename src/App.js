@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import React, { Component } from "react";
 import Form from "./form";
@@ -18,14 +17,19 @@ class App extends Component {
     });
   };
 
+  onCalculationComplete = result => {
+    this.setState({
+      finalResult: result.label + " Configuration:" + result.value,
+    })
+  }
+
   render() {  
     return (
       <div className="App">
         <header className="App-header">
-          <Form onChange={fields => this.onChange(fields)} />
-          <img src={logo} className="App-logo" alt="logo" />
+          <Form onChange={fields => this.onChange(fields)} onCalculationComplete={result => this.onCalculationComplete(result)} />
           <p>
-            {JSON.stringify(this.state.fields, null, 2)}
+            {this.state.finalResult}
           </p>
         </header>
       </div>
