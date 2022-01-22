@@ -3,14 +3,14 @@ export const seekNearest = (inProgressArray, headPosition) => {
     var distanceLeft = inProgressArray.length;
 
     var right = true;
-    
+
     for (let i = headPosition; i < inProgressArray.length; i++) {//Finds the value closest to the seek head
         if(inProgressArray[i] > 0){
             distanceRight = i - headPosition;
             break;
         }
     }
-    for (let i = headPosition; i > inProgressArray.length; i--) {//Finds the value closest to the seek head
+    for (let i = headPosition; i >= 0; i--) {//Finds the value closest to the seek head
         if(inProgressArray[i] > 0){
             distanceLeft = headPosition - i;
             right = false;
@@ -35,7 +35,7 @@ export const seekNearest = (inProgressArray, headPosition) => {
             break;
         }
     }
-    for (let i = source; i > inProgressArray.length; i--) {//Finds the value closest to the seek head
+    for (let i = source; i >= 0; i--) {//Finds the value closest to the seek head
         if(inProgressArray[i] < 0){
             distanceLeft = source - i;
             right = false;
@@ -56,7 +56,7 @@ export const seekNearest = (inProgressArray, headPosition) => {
 export const appendSteps = (head, source, destination) => {
     var outputSteps = [];
 
-    if(head > source){
+    if(head > source){//We are moving to the box and picking it up
         for(let i = head - source; i > 0; i--)outputSteps.push(1);
         outputSteps.push(3);
     }else if (head < source){
@@ -65,7 +65,9 @@ export const appendSteps = (head, source, destination) => {
     }else{
         outputSteps.push(3);
     }
-    if(source > destination){
+
+
+    if(source > destination){//We are moving to the destination and putting it down
         for(let i = source - destination; i > 0; i--)outputSteps.push(1);
         outputSteps.push(4);
     }else{
@@ -145,14 +147,7 @@ export const input = (input, process, output) => {
                 }
             }
         }
-        var outString = "";
-        outString = outString.concat(inputIntArray[0]);
-        for (let i = 1; i < inputArray.length; i++) {
-            outString = outString.concat(" ", inputIntArray[i]);
-        }
-        
-        return outString;        }
-        
+        return inputIntArray;
     }else{
         var DistanceVector = [];
         var headPosition = 0;
@@ -218,12 +213,5 @@ export const randomize = (input) => {
         outIntArray[rand]++;
     }
 
-    var outString = "";
-    outString = outString.concat(outIntArray[0]);
-    for(let i = 1; i < inputArray.length; i++){
-        outString = outString.concat(" ");
-        outString = outString.concat(outIntArray[i]);
-    }
-
-    return outString;
+    return outIntArray;
 }
