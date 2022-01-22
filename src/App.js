@@ -19,7 +19,7 @@ class App extends Component {
 
   onCalculationComplete = result => {
     this.setState({
-      finalResult: result.label + " Configuration:" + result.value,
+      finalResult: "Result: " + result.value,
     })
   }
 

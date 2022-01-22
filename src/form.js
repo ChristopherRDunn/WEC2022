@@ -1,13 +1,13 @@
 import React from "react";
-import CraneCalculator from './CraneCalculator';
+import { input, randomize } from './CraneCalculator';
 
 export default class form extends React.Component {
   defaultState = {
     inputConfig: "",
     processConfig: "",
     outputConfig: "",
-    readOnlyInputs: {
-      input: true,
+    calculation: {
+      randomize: true,
       process: false,
       output: false,
     },
@@ -24,10 +24,10 @@ export default class form extends React.Component {
 
   onSelectChange = e => {
     switch (e.target.value) {
-      case ("Input"):
+      case ("Randomize"):
         this.setState({
-          readOnlyInputs: {
-            input: true,
+          calculation: {
+            randomize: true,
             process: false,
             output: false,
           }
@@ -35,8 +35,8 @@ export default class form extends React.Component {
         break;
       case ("Process"):
         this.setState({
-          readOnlyInputs: {
-            input: false,
+          calculation: {
+            randomize: false,
             process: true,
             output: false,
           }
@@ -44,8 +44,8 @@ export default class form extends React.Component {
         break;
       case ("Output"):
         this.setState({
-          readOnlyInputs: {
-            input: false,
+          calculation: {
+            randomize: false,
             process: false,
             output: true,
           }
@@ -57,44 +57,49 @@ export default class form extends React.Component {
 
   onSubmit = e => {
     e.preventDefault();
-    console.log(e)
-    console.log(this.state)
-    const value = CraneCalculator.input(this.state.inputConfig, this.state.processConfig, this.state.outputConfig);
+    let value;
+    if (this.state.calculation.randomize) {
+      value = randomize(this.state.inputConfig);
+    }
+    value = input(this.state.inputConfig, this.state.processConfig, this.state.outputConfig);
     this.setState(this.defaultState);
-    this.props.onCalculationComplete({ label: "input", value: value});
+    this.props.onCalculationComplete({ label: "randomize", value: value});
   };
 
   render() {
     return (
       <form>
+        <label for="chooseCalculation">Chose operation type: </label>
         <select name="chooseCalculation" id="chooseCalculation" onChange={e => this.onSelectChange(e)}>
-          <option value="Input">Find Input</option>
-          <option value="Process">Find Process</option>
-          <option value="Output">Find Output</option>
+          <option value="Randomize">Generate Random Output</option>
+          <option value="Process">Find Process from Output</option>
+          <option value="Output">Find Output from Process</option>
         </select>
         <br/>
+        <label for="inputConfig">Input Configuration: </label>
         <input
           name="inputConfig"
           placeholder="Input Configuration"
           value={this.state.inputConfig}
           onChange={e => this.onChange(e)}
-          readOnly={this.state.readOnlyInputs.input}
         />
         <br />
+        <label for="processConfig">Process Configuration: </label>
         <input
           name="processConfig"
           placeholder="Process Configuration"
           value={this.state.processConfig}
           onChange={e => this.onChange(e)}
-          readOnly={this.state.readOnlyInputs.process}
+          readOnly={this.state.calculation.process || this.state.calculation.randomize}
         />
         <br/>
+        <label for="outputConfig">Output Configuration: </label>
         <input
           name="outputConfig"
           placeholder="Output Configuration"
           value={this.state.outputConfig}
           onChange={e => this.onChange(e)}
-          readOnly={this.state.readOnlyInputs.output}
+          readOnly={this.state.calculation.output || this.state.calculation.randomize}
         />
         <br />
         <button onClick={e => this.onSubmit(e)}>Submit</button>
