@@ -1,7 +1,9 @@
 export const seekNearest = (inProgressArray, headPosition) => {
     var distanceRight = inProgressArray.length;
     var distanceLeft = inProgressArray.length;
+
     var right = true;
+    
     for (let i = headPosition; i < inProgressArray.length; i++) {//Finds the value closest to the seek head
         if(inProgressArray[i] > 0){
             distanceRight = i - headPosition;
@@ -22,9 +24,8 @@ export const seekNearest = (inProgressArray, headPosition) => {
     if(right){
         source = headPosition + distanceRight;
     }else{
-        source = headPosition + distanceLeft;
+        source = headPosition - distanceLeft;
     }
-
     distanceRight = inProgressArray.length;
     distanceLeft = inProgressArray.length;
     var right = true;
@@ -48,12 +49,13 @@ export const seekNearest = (inProgressArray, headPosition) => {
     if(right){
         destination = source + distanceRight;
     }else{
-        destination = source + distanceLeft;
+        destination = source - distanceLeft;
     }
     return [headPosition,source,destination];
 }
 export const appendSteps = (head, source, destination) => {
     var outputSteps = [];
+
     if(head > source){
         for(let i = head - source; i > 0; i--)outputSteps.push(1);
         outputSteps.push(3);
@@ -122,7 +124,7 @@ export const input = (input, process, output) => {
                         }
                         break;
                     case 2: //Move Right
-                        if (headPosition < processIntArray.length - 1) {
+                        if (headPosition < inputArray.length - 1) {
                             headPosition++;
                         }
                         break;
@@ -142,7 +144,6 @@ export const input = (input, process, output) => {
                         done = true;
                 }
             }
-
         }
         var outString = "";
         outString = outString.concat(inputIntArray[0]);
@@ -150,7 +151,8 @@ export const input = (input, process, output) => {
             outString = outString.concat(" ", inputIntArray[i]);
         }
         
-        return outString;
+        return outString;        }
+        
     }else{
         var DistanceVector = [];
         var headPosition = 0;
@@ -181,7 +183,7 @@ export const input = (input, process, output) => {
         for(let z=discrepancy; z>0; z -= 2){
             var seekout = seekNearest(DistanceVector, headPosition);
             source = seekout[1];
-            destination = seekout[1];
+            destination = seekout[2];
 
             var appendout = appendSteps(headPosition, source, destination);
             for(let i=0; i<appendout.length; i++){
@@ -215,7 +217,7 @@ export const randomize = (input) => {
         var rand = Math.floor(Math.random() * inputArray.length);
         outIntArray[rand]++;
     }
-    
+
     var outString = "";
     outString = outString.concat(outIntArray[0]);
     for(let i = 1; i < inputArray.length; i++){
