@@ -1,5 +1,6 @@
 import React from "react";
 import { input, randomize } from './CraneCalculator';
+import "./form.css";
 
 export default class form extends React.Component {
   defaultState = {
@@ -26,15 +27,19 @@ export default class form extends React.Component {
     switch (e.target.value) {
       case ("Randomize"):
         this.setState({
+          processConfig: "",
+          outputConfig: "",
           calculation: {
             randomize: true,
             process: false,
             output: false,
           }
         });
+        
         break;
       case ("Process"):
         this.setState({
+          processConfig: "",
           calculation: {
             randomize: false,
             process: true,
@@ -44,6 +49,7 @@ export default class form extends React.Component {
         break;
       case ("Output"):
         this.setState({
+          outputConfig: "",
           calculation: {
             randomize: false,
             process: false,
@@ -65,46 +71,49 @@ export default class form extends React.Component {
       value = input(this.state.inputConfig, this.state.processConfig, this.state.outputConfig);
     }
 
-    console.log(value);
     this.props.onCalculationComplete({ label: "randomize", value: value});
   };
 
   render() {
     return (
       <form>
-        <label for="chooseCalculation">Chose operation type: </label>
-        <select name="chooseCalculation" id="chooseCalculation" onChange={e => this.onSelectChange(e)}>
+        <label className="label" for="chooseCalculation">Chose operation type: </label>
+        <select 
+          className="select" name="chooseCalculation" id="chooseCalculation" onChange={e => this.onSelectChange(e)}>
           <option value="Randomize">Generate Random Output</option>
-          <option value="Process">Find Process from Output</option>
-          <option value="Output">Find Output from Process</option>
+          <option value="Output">Given Process find Output</option>
+          <option value="Process">Given Output find Process</option>
         </select>
         <br/>
-        <label for="inputConfig">Input Configuration: </label>
+        <label className="label" for="inputConfig">Input Configuration: </label>
         <input
           name="inputConfig"
+          className="value" 
           placeholder="Input Configuration"
           value={this.state.inputConfig}
           onChange={e => this.onChange(e)}
         />
-        <br />
-        <label for="processConfig">Process Configuration: </label>
+        <br/>
+        <label className="label" for="processConfig">Process Configuration: </label>
         <input
           name="processConfig"
+          className="value" 
           placeholder="Process Configuration"
           value={this.state.processConfig}
           onChange={e => this.onChange(e)}
           readOnly={this.state.calculation.process || this.state.calculation.randomize}
         />
         <br/>
-        <label for="outputConfig">Output Configuration: </label>
+        <label className="label" for="outputConfig">Output Configuration: </label>
         <input
           name="outputConfig"
+          className="value"
           placeholder="Output Configuration"
           value={this.state.outputConfig}
           onChange={e => this.onChange(e)}
           readOnly={this.state.calculation.output || this.state.calculation.randomize}
         />
-        <br />
+        <br/>
         <button onClick={e => this.onSubmit(e)}>Submit</button>
       </form>
     );

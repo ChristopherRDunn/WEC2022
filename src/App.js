@@ -27,10 +27,13 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <Form onChange={fields => this.onChange(fields)} onCalculationComplete={result => this.onCalculationComplete(result)} />
-          <p>
-            {this.state.finalResult}
-          </p>
+          <div>
+            <h2>Shipment Stacking Simulation</h2>
+            <Form onChange={fields => this.onChange(fields)} onCalculationComplete={result => this.onCalculationComplete(result)} />
+            <p>
+              {this.state.finalResult}
+            </p>
+          </div>
         </header>
       </div>
     );
