@@ -147,7 +147,13 @@ export const input = (input, process, output) => {
                 }
             }
         }
-        return inputIntArray;
+        var outString = "";
+        outString = outString.concat(inputIntArray[0]);
+        for (let i = 1; i < inputArray.length; i++) {
+            outString = outString.concat(" ", inputIntArray[i]);
+        }
+        
+        return outString;
     }else{
         var DistanceVector = [];
         var headPosition = 0;
@@ -212,6 +218,13 @@ export const randomize = (input) => {
         var rand = Math.floor(Math.random() * inputArray.length);
         outIntArray[rand]++;
     }
+    
+    var outString = "";
+    outString = outString.concat(outIntArray[0]);
+    for(let i = 1; i < inputArray.length; i++){
+        outString = outString.concat(" ");
+        outString = outString.concat(outIntArray[i]);
+    }
 
-    return outIntArray;
+    return outString;
 }
