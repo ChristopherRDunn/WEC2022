@@ -145,9 +145,9 @@ export const input = (input, process, output) => {
 
         }
         var outString = "";
-        outString.concat(inputIntArray[0]);
+        outString = outString.concat(inputIntArray[0]);
         for (let i = 1; i < inputArray.length; i++) {
-            outString.concat(" ", inputIntArray[i]);
+            outString = outString.concat(" ", inputIntArray[i]);
         }
         
         return outString;
@@ -179,14 +179,14 @@ export const input = (input, process, output) => {
         //4 means drop
         //We want to move boxes from positive to negative
         for(let z=discrepancy; z>0; z -= 2){
-            var seekout = this.seekNearest(DistanceVector, headPosition);
+            var seekout = seekNearest(DistanceVector, headPosition);
             source = seekout[1];
             destination = seekout[1];
 
-            var appendout = this.appendSteps(headPosition, source, destination);
+            var appendout = appendSteps(headPosition, source, destination);
             for(let i=0; i<appendout.length; i++){
-                result.concat(appendout[i]);
-                result.concat(" ");
+                result = result.concat(appendout[i]);
+                result = result.concat(" ");
             }
 
             headPosition = destination;
@@ -194,7 +194,7 @@ export const input = (input, process, output) => {
             DistanceVector[destination] += 1;
         }
 
-        result.concat(0);
+        result = result.concat(0);
         return result;
     }
 }
@@ -210,15 +210,18 @@ export const randomize = (input) => {
         return "Formatting Error";
     }
 
-    var outIntArray = new Array(input.length).fill(0);
+    var outIntArray = new Array(inputArray.length).fill(0);
     for(sum; sum > 0; sum--){
-        outIntArray[Math.floor(Math.random() * input.length)] += 1;
+        var rand = Math.floor(Math.random() * inputArray.length);
+        outIntArray[rand]++;
     }
     
     var outString = "";
-    outString.concat(outIntArray[0]);
-    for(let i = 1; i < input.length; i++){
-        outString.concat(" ");
-        outString.concat(outIntArray[i]);
+    outString = outString.concat(outIntArray[0]);
+    for(let i = 1; i < inputArray.length; i++){
+        outString = outString.concat(" ");
+        outString = outString.concat(outIntArray[i]);
     }
+
+    return outString;
 }

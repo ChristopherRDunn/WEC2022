@@ -59,10 +59,13 @@ export default class form extends React.Component {
     e.preventDefault();
     let value;
     if (this.state.calculation.randomize) {
+      console.log()
       value = randomize(this.state.inputConfig);
+    } else {
+      value = input(this.state.inputConfig, this.state.processConfig, this.state.outputConfig);
     }
-    value = input(this.state.inputConfig, this.state.processConfig, this.state.outputConfig);
-    this.setState(this.defaultState);
+
+    console.log(value);
     this.props.onCalculationComplete({ label: "randomize", value: value});
   };
 
